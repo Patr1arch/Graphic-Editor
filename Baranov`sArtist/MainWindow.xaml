@@ -1,0 +1,44 @@
+﻿<Window x:Class="Baranov_sArtist.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Baranov_sArtist"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="546" Width="711" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70px
+                           "></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="Red" Height="70" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="703">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300px"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="300px"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <ToolBarPanel Name="colorbarPanel" Grid.Row="0" Height="35px" Orientation="Horizontal" Margin="24,0,0,0"/>
+            </Grid>
+            <Button x:Name="buttonFirstColor" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="50" Height="30" Click="FirstColor"  Background="Black" BorderBrush="White" Margin="297,10,5,30" Grid.ColumnSpan="2"/>
+            <Button x:Name="buttonSecondColor" Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="50" Height="30" Click="SecondColor" BorderBrush="White" Margin="0,10,1.2,30"/>
+            <ToolBarPanel Grid.Column="0"  Name="MyToolBarPanel" Height="70" Orientation="Horizontal" Grid.RowSpan="2"/>
+        </Grid>
+        <ScrollViewer Name="ScrollViewerCanvas" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanContentScroll="False" >
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                <Canvas  x:Name="MyCanvas" Background="Gray" MouseDown="CanvasMouseDown" MouseUp="CanvasMouseUp" MouseMove="CanvasMouseMove" ClipToBounds="True" Height="445" VerticalAlignment="Top" HorizontalAlignment="Left" Width="703" Loaded="MyCanvasLoaded" SizeChanged="MyCanvasSizeChanged">
+                    <Canvas.LayoutTransform>
+                        <ScaleTransform x:Name="layout"/>
+                    </Canvas.LayoutTransform>
+                </Canvas>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+    
+</Window>
