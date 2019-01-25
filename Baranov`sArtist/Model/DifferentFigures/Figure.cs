@@ -7,27 +7,60 @@ using System.Windows.Controls;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Baranov_sArtist.Model.DifferentFigures
 {
-    class Figure
+    [Serializable]
+
+    public class Figure : ISerializable
     {
-        public List<Point> coordinates;
+        public List<Point> coordinates { get; set; }
 
-        protected SolidColorBrush color;
+        public Brush Color { get; set; }
 
-        protected SolidColorBrush brushColor;
+        public Brush BrushColor { get; set; }
 
-        //protected List<Point> coordinates;
+        public string ColorString { get; set; }
+
+        public string BrushColorString { get; set; }
+
+        public Pen Pen { get; set; }
+
+        public double PenThikness { get; set; }
+
+        public bool Select { get; set; }
+
+        public string Type { get; set; }
+
+        public DashStyle Dash { get; set; }
+
+        public string DashString { get; set; }
+
+        public Figure SelectRect { get; set; }
+
+        public double RoundX { get; set; }
+
+        public double RoundY { get; set; }
+
+        public virtual Figure Clone()
+        {
+            return new Figure();
+        }
+
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+
+        }
 
         public Figure()
         {
 
         }
 
-        public Figure(Point aPoint)
+        public Figure(Point Point)
         {
-            coordinates.Add(aPoint);
+            coordinates.Add(Point);
         }
 
         public virtual void Draw(DrawingContext graphics)
@@ -35,9 +68,49 @@ namespace Baranov_sArtist.Model.DifferentFigures
 
         }
 
-        public virtual void ChangeCoord(Point aPoint)
+        public virtual void ChangeCoord(Point point)
         {
-            coordinates.Add(aPoint);
+            coordinates.Add(point);
+        }
+
+        public virtual void UnSelected()
+        {
+
+        }
+
+        public virtual void Selected()
+        {
+
+        }
+
+        public virtual void ChangePen(Brush color, string colorstring)
+        {
+
+        }
+
+        public virtual void ChangePen(double thikness)
+        {
+
+        }
+
+        public virtual void ChangePen(DashStyle dash, string dashstring)
+        {
+
+        }
+
+        public virtual void ChangePen(Brush color, string brushstring, bool check)
+        {
+
+        }
+
+        public virtual void ChangeRoundX(double newRoundX)
+        {
+
+        }
+
+        public virtual void ChangeRoundY(double newRoundY)
+        {
+
         }
     }
 }

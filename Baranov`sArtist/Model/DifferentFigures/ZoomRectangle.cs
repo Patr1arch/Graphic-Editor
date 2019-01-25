@@ -11,6 +11,11 @@ namespace Baranov_sArtist.Model.DifferentFigures
 {
     class ZoomRectangle : Figure
     {
+        public ZoomRectangle(Point aPoint, Point aPoint_)
+        {
+            coordinates = new List<Point> { aPoint, aPoint_ };
+        }
+
         public ZoomRectangle(Point aPoint)
         {
             coordinates = new List<Point> { aPoint, aPoint };

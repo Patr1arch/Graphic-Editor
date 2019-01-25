@@ -7,18 +7,122 @@ using System.Windows.Media;
 using Baranov_sArtist.Model.Tools;
 using Baranov_sArtist.Model;
 using Baranov_sArtist.Model.DifferentFigures;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using BaranovsArtist.Model.Tools;
 
 namespace Baranov_sArtist.Model
 {
+    [Serializable]
     class NotArtist
     {
         public static List<Figure> Figures = new List<Figure>();
 
         public static FigureHost FigureHost = new FigureHost();
 
-        public static SolidColorBrush BrushNow = null;
+        public static Tool SelectedTool = new PencilTool();
 
-        public static SolidColorBrush SelectedColor = Brushes.Black;
+        public static List<List<Figure>> ConditionsCanvas = new List<List<Figure>>();
+
+        public static int ConditionNumber = 0;
+
+        public static Tool HandTool = new HandForFigureTool();
+
+        public static void AddCondition()
+        {
+            List<Figure> figuresNow = new List<Figure>();
+
+            foreach (Figure figure in Figures)
+            {
+                figuresNow.Add(figure.Clone());
+            }
+
+            ConditionsCanvas.Add(figuresNow);
+
+            ConditionNumber++;
+
+            if (ConditionNumber != ConditionsCanvas.Count)
+            {
+                ConditionsCanvas.RemoveRange(ConditionNumber - 1, ConditionsCanvas.Count - ConditionNumber);
+            }
+
+            Figures.Clear();
+
+            foreach (Figure figure in figuresNow)
+            {
+                Figures.Add(figure.Clone());
+            }
+
+            foreach (Figure figure in ConditionsCanvas[ConditionNumber - 1])
+            {
+                figure.Select = false;
+                figure.SelectRect = null;
+            }
+
+            if (ConditionsCanvas.Count > 1)
+
+            {
+                foreach (Figure figure in ConditionsCanvas[ConditionNumber - 2])
+                {
+                    figure.Select = false;
+                    figure.SelectRect = null;
+                }
+            }
+        }
+
+        public static void gotoPastCondition()
+        {
+            if (ConditionNumber != 1)
+            {
+                ConditionNumber--;
+
+                Figures.Clear();
+
+                foreach (Figure figure in ConditionsCanvas[ConditionNumber - 1])
+                {
+                    Figures.Add(figure.Clone());
+                }
+            }
+        }
+
+        public static void gotoSecondCondition()
+        {
+            if (ConditionNumber != ConditionsCanvas.Count)
+            {
+                ConditionNumber++;
+
+                Figures.Clear();
+
+                foreach (Figure figure in ConditionsCanvas[ConditionNumber - 1])
+                {
+                    Figures.Add(figure.Clone());
+                }
+            }
+        }
+
+        public static Brush BrushNow = null;
+
+        public static string BrushStringNow = "null";
+
+        public static Brush tempBrush = null;
+
+        public static Brush SelectedColor = Brushes.Black;
+
+        public static string ColorStringNow = "Black";
+
+        public static string tempStringBrush = "";
+
+        public static double ThicnessNow = 4;
+
+        public static DashStyle DashNow = DashStyles.Solid;
+
+        public static string DashStringhNow = "―――――";
+
+        public static double RoundXNow = 0;
+
+        public static double RoundYNow = 0;
+
 
         public static double ScaleRateX = 1;
 
@@ -40,8 +144,8 @@ namespace Baranov_sArtist.Model
 
         public static double CanvasHeigth;
 
-        public static Tool SelectedTool = new PencilTool();
 
+        [field: NonSerialized]
         public static readonly Dictionary<string, Tool> ToolsList = new Dictionary<string, Tool>()
         {
             { "Line", new LineTool() },
@@ -50,9 +154,35 @@ namespace Baranov_sArtist.Model
             { "RoundRectangle", new RoundRectangleTool() },
             { "Pencil", new PencilTool() },
             { "Hand", new HandTool() },
-            { "ZoomTool", new ZoomTool() },
+            { "Zoom", new ZoomTool() },
+            { "Allotment", new AllotmentTool() },
+
         };
-        public static readonly Dictionary<string, SolidColorBrush> TransformColor = new Dictionary<string, SolidColorBrush>()
+
+        [field: NonSerialized]
+        public static readonly Dictionary<string, DashStyle> TransformDash = new Dictionary<string, DashStyle>()
+        {
+            { "0", DashStyles.Solid },
+            { "1", DashStyles.Dash },
+            { "2", DashStyles.DashDot },
+            { "3", DashStyles.DashDotDot },
+            { "4", DashStyles.Dot },
+
+        };
+
+        [field: NonSerialized]
+        public static readonly Dictionary<string, DashStyle> TransformDashProp = new Dictionary<string, DashStyle>()
+        {
+            { "―――――", DashStyles.Solid },
+            { "— — — — — —", DashStyles.Dash },
+            { "— ∙ — ∙ — ∙ — ∙ —", DashStyles.DashDot },
+            { "— ∙ ∙ — ∙ ∙ — ∙ ∙ — ", DashStyles.DashDotDot },
+            { "∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙", DashStyles.Dot },
+
+        };
+
+        [field: NonSerialized]
+        public static readonly Dictionary<string, Brush> TransformColor = new Dictionary<string, Brush>()
         {
             { "Black", Brushes.Black },
             { "Red", Brushes.Red },
@@ -63,6 +193,7 @@ namespace Baranov_sArtist.Model
             { "Purple", Brushes.Purple },
             { "Coral", Brushes.Coral },
             { "White", Brushes.White },
+            { "null", null }
         };
     }
 }

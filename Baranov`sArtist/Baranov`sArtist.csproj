@@ -80,7 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\NotArtist.cs" />
+    <Compile Include="Model\Tools\AllotmentTool.cs" />
     <Compile Include="Model\Tools\EllipseTool.cs" />
+    <Compile Include="Model\Tools\HandForFigureTool.cs" />
     <Compile Include="Model\Tools\HandTool.cs" />
     <Compile Include="Model\Tools\LineTool.cs" />
     <Compile Include="Model\Tools\PencilTool.cs" />
@@ -115,6 +117,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Model\superIcons\Allotment.png" />
     <Content Include="Model\superIcons\Clean.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -139,7 +142,7 @@
     <Content Include="Model\superIcons\RoundRectangle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Model\superIcons\ZoomTool.png">
+    <Content Include="Model\superIcons\Zoom.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

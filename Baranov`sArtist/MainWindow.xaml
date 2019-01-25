@@ -5,40 +5,71 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Baranov_sArtist"
         mc:Ignorable="d"
-        Title="MainWindow" Height="546" Width="711" ResizeMode="NoResize">
+        Title="MainWindow" Height="546" Width="892.024" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70px
-                           "></RowDefinition>
+            <RowDefinition Height="70px"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="Red" Height="70" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="703">
+        <Grid Grid.Row="0" Background="red" Height="70" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="403px"></ColumnDefinition>
                 <ColumnDefinition Width="300px"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="300px"></ColumnDefinition>
+                <ColumnDefinition Width="400px"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="3">
+            <Grid Grid.Column="1">
+                <ComboBox x:Name="comboBoxDash" HorizontalAlignment="Left" Margin="126,38,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="ChangeSelectionDash">
+                    <TextBlock Tag="Solid"  TextAlignment="Center" Width="110">―――――</TextBlock>
+                    <TextBlock Tag="Dash" TextAlignment="Center" Width="110">— — — — — —</TextBlock>
+                    <TextBlock Tag="Dash" TextAlignment="Center" Width="110">— ∙ — ∙ — ∙ — ∙ —</TextBlock>
+                    <TextBlock Tag="Dash" TextAlignment="Center" Width="110">— ∙ ∙ — ∙ ∙ — ∙ ∙ — </TextBlock>
+                    <TextBlock Tag="Dash" TextAlignment="Center" Width="110">∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙</TextBlock>
+                </ComboBox>
+                <TextBox x:Name="textBoxRoundRectX" HorizontalAlignment="Left" Height="23" Margin="261,37,-18,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="57" IsEnabled="False" TextChanged="textBoxRoundRectX_TextChanged"/>
+                <TextBox x:Name="textBoxRoundRectY" HorizontalAlignment="Left" Height="23" Margin="347,37,-104,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="57" IsEnabled="False" TextChanged="textBoxRoundRectY_TextChanged"/>
+                <TextBlock x:Name="textBlockRoundY" HorizontalAlignment="Left" Height="15" Margin="347,10,-104,0" TextWrapping="Wrap" Text="RoundY" VerticalAlignment="Top" Width="57" TextAlignment="Center" IsEnabled="False"/>
+                <TextBlock x:Name="textBlockRoundX" HorizontalAlignment="Left" Height="15" Margin="261,10,-18,0" TextWrapping="Wrap" Text="RoundX" VerticalAlignment="Top" Width="57" TextAlignment="Center" IsEnabled="False"/>
+            </Grid>
+            <Grid Grid.Column="2" Margin="4.8,0,-4.8,0">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <ToolBarPanel Name="colorbarPanel" Grid.Row="0" Height="35px" Orientation="Horizontal" Margin="24,0,0,0"/>
+                <ToolBarPanel Name="colorbarPanel" Grid.Row="0" Height="35px" Orientation="Horizontal" Margin="-444,-2,443,2.2" HorizontalAlignment="Right" Width="401"/>
+                <Button x:Name="button_secondColor" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="50" Click="SecondColor" BorderBrush="White" Margin="-303,2.8,653,7.4"/>
+                <Button x:Name="button_firstColor" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="50" Click="FirstColor"  Background="Black" BorderBrush="White" Margin="-235,2.8,585,7.4" Grid.Row="1"/>
+                <Slider x:Name="ThiknessSlider" HorizontalAlignment="Left" Margin="107,35,0,-22.6" VerticalAlignment="Top" Height="58" Width="62" Minimum="1" Value="4" ValueChanged="ThiknessSlider_ValueChanged" Maximum="20" Grid.RowSpan="2"/>
             </Grid>
-            <Button x:Name="buttonFirstColor" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="50" Height="30" Click="FirstColor"  Background="Black" BorderBrush="White" Margin="297,10,5,30" Grid.ColumnSpan="2"/>
-            <Button x:Name="buttonSecondColor" Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="50" Height="30" Click="SecondColor" BorderBrush="White" Margin="0,10,1.2,30"/>
-            <ToolBarPanel Grid.Column="0"  Name="MyToolBarPanel" Height="70" Orientation="Horizontal" Grid.RowSpan="2"/>
+            <ToolBarPanel Grid.Column="0"  Name="toolbarPanel" Orientation="Horizontal" Margin="0,30,5.2,0"/>
+            <Button x:Name="gotoPastCondition" HorizontalAlignment="Left" Height="19" Margin="187,6,0,0" VerticalAlignment="Top" Width="24" Click="gotoPastCondition_Click" IsEnabled="False">
+                <StackPanel>
+                    <Image Source="C:\Users\patri\OneDrive\Desktop\Graphic-Editor\Baranov`sArtist\Model\superIcons\Left.png" Height="15" Width="21" RenderTransformOrigin="0.387,0.445"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="gotoSecondCondition" HorizontalAlignment="Left" Height="19" Margin="216,6,0,0" VerticalAlignment="Top" Width="24" Click="gotoSecondCondition_Click" IsEnabled="False">
+                <StackPanel>
+                    <Image Source="C:\Users\patri\OneDrive\Desktop\Graphic-Editor\Baranov`sArtist\Model\superIcons\Right.png" Height="15" Width="21" RenderTransformOrigin="0.544,0.517"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="75" Click="SaveButton_Click"/>
+            <Button x:Name="LoadButton" Content="Load" HorizontalAlignment="Left" Margin="90,5,0,0" VerticalAlignment="Top" Width="75" Click="LoadButton_Click"/>
         </Grid>
-        <ScrollViewer Name="ScrollViewerCanvas" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanContentScroll="False" >
-            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
-                <Canvas  x:Name="MyCanvas" Background="Gray" MouseDown="CanvasMouseDown" MouseUp="CanvasMouseUp" MouseMove="CanvasMouseMove" ClipToBounds="True" Height="445" VerticalAlignment="Top" HorizontalAlignment="Left" Width="703" Loaded="MyCanvasLoaded" SizeChanged="MyCanvasSizeChanged">
-                    <Canvas.LayoutTransform>
-                        <ScaleTransform x:Name="layout"/>
-                    </Canvas.LayoutTransform>
-                </Canvas>
-            </StackPanel>
-        </ScrollViewer>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="135"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Name="ScrollViewerCanvas" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanContentScroll="False" Margin="4,0,0,0">
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <Canvas  x:Name="MyCanvas" Background="Gray" MouseDown="MyCanvas_MouseDown" MouseUp="MyCanvas_MouseUp" MouseMove="MyCanvas_MouseMove" ClipToBounds="True" Height="493" VerticalAlignment="Top" HorizontalAlignment="Left" Width="759" Loaded="MyCanvasLoaded" SizeChanged="MyCanvas_SizeChanged" MouseLeave="MyCanvas_MouseLeave">
+                        <Canvas.LayoutTransform>
+                            <ScaleTransform x:Name="layout"/>
+                        </Canvas.LayoutTransform>
+                    </Canvas>
+                </StackPanel>
+            </ScrollViewer>
+            <ToolBarPanel Name="PropToolBarPanel" HorizontalAlignment="Left" Width="134"/>
+        </Grid>
     </Grid>
-    
+
 </Window>
