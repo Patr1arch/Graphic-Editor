@@ -31,10 +31,14 @@ namespace Baranov_sArtist.Model.DifferentFigures
 
         public override void Draw(DrawingContext drawingContext)
         {
-            for (int i = 0; i < coordinates.Count - 1; i++)
+            var geometry = new StreamGeometry();
+            using (StreamGeometryContext ctx = geometry.Open())
             {
-                drawingContext.DrawLine(Pen, coordinates[i], coordinates[i + 1]);
+                ctx.BeginFigure(new Point(coordinates[0].X, coordinates[0].Y), true /* is filled */, false /* is closed */);
+                ctx.PolyLineTo(coordinates, true /* is stroked */, false /* is smooth join */);
             }
+            geometry.Freeze();
+            drawingContext.DrawGeometry(NotArtist.BrushNow, Pen, geometry);
         }
 
         public override void ChangeCoord(Point aPoint)

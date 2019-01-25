@@ -34,7 +34,6 @@ namespace Baranov_sArtist.Model.DifferentFigures
 
         public override void Draw(DrawingContext drawingContext) => drawingContext.DrawLine(Pen, coordinates[0], coordinates[1]);
 
-
         public override void ChangeCoord(Point aPoint) => coordinates[1] = aPoint;
 
         public override void Selected()
