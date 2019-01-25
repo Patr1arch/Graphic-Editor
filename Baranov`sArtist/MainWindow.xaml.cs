@@ -289,19 +289,6 @@ namespace Baranov_sArtist
 
         private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Title = "Сохранить как";
-            sfd.OverwritePrompt = true;
-            sfd.CheckPathExists = true;
-            sfd.Filter = "Files(*.bin)|*.bin";
-            sfd.ShowDialog();
-            if (sfd.FileName != "")
-            {
-                FileStream file = (FileStream)sfd.OpenFile();
-                BinaryFormatter bin = new BinaryFormatter();
-                bin.Serialize(file, NotArtist.Figures);
-                file.Close();
-            }
 
             NotArtist.Figures.Clear();
             OpenFileDialog ofd = new OpenFileDialog();

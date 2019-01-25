@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using Baranov_sArtist;
 using Baranov_sArtist.Model.Tools;
 using Baranov_sArtist.Model;
 using Baranov_sArtist.Model.DifferentFigures;
 using System.Runtime.Serialization;
+using System.Windows.Shapes;
 
 namespace Baranov_sArtist.Model.DifferentFigures
 {
@@ -32,7 +34,23 @@ namespace Baranov_sArtist.Model.DifferentFigures
             Type = "Line";
         }
 
-        public override void Draw(DrawingContext drawingContext) => drawingContext.DrawLine(Pen, coordinates[0], coordinates[1]);
+        public override void Draw(DrawingContext drawingContext)
+        {
+            var geometry = new StreamGeometry();
+            using (StreamGeometryContext ctx = geometry.Open())
+            {
+                ctx.BeginFigure(new Point(coordinates[0].X, coordinates[0].Y), true /* is filled */, false /* is closed */);
+                ctx.PolyLineTo(coordinates, true /* is stroked */, false /* is smooth join */);
+            }
+            geometry.Freeze();
+            drawingContext.DrawGeometry(NotArtist.BrushNow, Pen, geometry);
+            //var myPolyline = new Polyline();
+            //PointCollection myPointCollection = new PointCollection();
+            //myPointCollection.Add(coordinates[0]);
+            //myPointCollection.Add(coordinates[1]);
+            //myPolyline.Points = myPointCollection;
+            //drawingContext.DrawLine(Pen, coordinates[0], coordinates[1]);
+        }
 
 
         public override void ChangeCoord(Point aPoint) => coordinates[1] = aPoint;
