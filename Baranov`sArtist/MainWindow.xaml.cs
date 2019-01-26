@@ -444,5 +444,47 @@ namespace Baranov_sArtist
             gotoSecondCondition.IsEnabled = false;
         }
 
+
+        public void IncreaseZIndex(object sender, RoutedEventArgs e)
+        {
+            var i = 0;
+            foreach (Figure figure in NotArtist.Figures.ToArray())
+            {
+                if ((!figure.Equals(NotArtist.Figures[NotArtist.Figures.Count - 1])) && (figure.Select))
+                {
+                    var buf = NotArtist.Figures[i];
+                    NotArtist.Figures[i] = NotArtist.Figures[i + 1];
+                    NotArtist.Figures[i + 1] = buf;
+                    //NotArtist.Figures.Remove(figure);
+                    //NotArtist.Figures.Add(figure);
+                    Invalidate();
+                }
+                i++;
+            }
+            NotArtist.AddCondition();
+            gotoPastCondition.IsEnabled = true;
+            gotoSecondCondition.IsEnabled = false;
+            Invalidate();
+        }
+
+
+        public void DecZIndex(object sender, RoutedEventArgs e)
+        {
+            var i = 0;
+            foreach (Figure figure in NotArtist.Figures.ToArray())
+            {
+                if ((!figure.Equals(NotArtist.Figures[0])) && (figure.Select))
+                {
+                    var buf = NotArtist.Figures[i];
+                    NotArtist.Figures[i] = NotArtist.Figures[i - 1];
+                    NotArtist.Figures[i - 1] = buf;
+                }
+                i++;
+            }
+            NotArtist.AddCondition();
+            gotoPastCondition.IsEnabled = true;
+            gotoSecondCondition.IsEnabled = false;
+            Invalidate();
+        }
     }
 }

@@ -91,7 +91,7 @@ namespace BaranovsArtist.Model.Tools
                         figure.UnSelected();
                     }
                 }
-                else
+                else 
                 {
                     Point p3 = figure.coordinates[0];
                     Point p4 = new Point(figure.coordinates[1].X, figure.coordinates[0].Y);

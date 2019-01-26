@@ -171,7 +171,7 @@ namespace Baranov_sArtist.Model
             Button ClearSelectedFigure = new Button();
             ClearSelectedFigure.Height = 23;
             ClearSelectedFigure.Width = 60;
-            ClearSelectedFigure.Content = "Delet";
+            ClearSelectedFigure.Content = "Delete";
             ClearSelectedFigure.Click += new RoutedEventHandler(Instance.ClearSelectedFigure);
             ClearSelectedFigure.Margin = new Thickness(2);
             Instance.PropToolBarPanel.Children.Add(ClearSelectedFigure);
@@ -188,6 +188,28 @@ namespace Baranov_sArtist.Model
             HandForSelectedFigure.Click += new RoutedEventHandler(Instance.HandForSelectedFigure);
             HandForSelectedFigure.Margin = new Thickness(2);
             Instance.PropToolBarPanel.Children.Add(HandForSelectedFigure);
+
+            Label ZIndex = new Label();
+            ZIndex.Content = "Z-Index";
+            ZIndex.HorizontalAlignment = HorizontalAlignment.Center;
+            Instance.PropToolBarPanel.Children.Add(ZIndex);
+
+            Button IncreaseZIndex = new Button();
+            IncreaseZIndex.Height = 23;
+            IncreaseZIndex.Width = 60;
+            IncreaseZIndex.Content = "IncZindex";
+            IncreaseZIndex.Click += new RoutedEventHandler(Instance.IncreaseZIndex);
+            IncreaseZIndex.Margin = new Thickness(2);
+            Instance.PropToolBarPanel.Children.Add(IncreaseZIndex);
+
+            Button DecZIndex = new Button();
+            DecZIndex.Height = 23;
+            DecZIndex.Width = 60;
+            DecZIndex.Content = "DecZIndex";
+            DecZIndex.Click += new RoutedEventHandler(Instance.DecZIndex);
+            DecZIndex.Margin = new Thickness(2);
+            Instance.PropToolBarPanel.Children.Add(DecZIndex);
+
 
             bool HaveOnlyEllipse = true;
             double RoundX = 0;

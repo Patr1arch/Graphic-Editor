@@ -15,6 +15,7 @@ namespace Baranov_sArtist.Model.DifferentFigures
 
     public class Figure : ISerializable
     {
+
         public List<Point> coordinates { get; set; }
 
         public Brush Color { get; set; }

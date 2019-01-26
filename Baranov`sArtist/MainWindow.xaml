@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Baranov_sArtist"
         mc:Ignorable="d"
-        Title="MainWindow" Height="546" Width="892.024" ResizeMode="NoResize">
+        Title="MainWindow" Height="722.7" Width="986.824" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70px"></RowDefinition>
@@ -68,7 +68,8 @@
                     </Canvas>
                 </StackPanel>
             </ScrollViewer>
-            <ToolBarPanel Name="PropToolBarPanel" HorizontalAlignment="Left" Width="134"/>
+            <ToolBarPanel Name="PropToolBarPanel" HorizontalAlignment="Left" Width="134">
+            </ToolBarPanel>
         </Grid>
     </Grid>
 
