@@ -10,6 +10,8 @@ using Microsoft.Win32;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
+using System.Windows.Media.Imaging;
+using System.Text.RegularExpressions;
 
 namespace Baranov_sArtist
 {
@@ -23,6 +25,10 @@ namespace Baranov_sArtist
         List<Figure> BufList = new List<Figure>();
 
         bool ClickOnCanvas = false;
+
+        int saveConditionNumber = -1;
+
+        bool isSave = false;
 
         public MainWindow()
         {
@@ -100,6 +106,7 @@ namespace Baranov_sArtist
                     NotArtist.AddCondition();
                     gotoPastCondition.IsEnabled = true;
                     gotoSecondCondition.IsEnabled = false;
+                    SaveButton.Content = "Save*";
                 }
                 if (NotArtist.SelectedTool == NotArtist.ToolsList["Zoom"])
                 {
@@ -127,6 +134,7 @@ namespace Baranov_sArtist
                     NotArtist.AddCondition();
                     gotoPastCondition.IsEnabled = true;
                     gotoSecondCondition.IsEnabled = false;
+                    SaveButton.Content = "Save*";
                 }
                 if (NotArtist.SelectedTool == NotArtist.ToolsList["Zoom"])
                 {
@@ -220,7 +228,8 @@ namespace Baranov_sArtist
             NotArtist.ConditionsCanvas.Clear();
             NotArtist.AddCondition();
             gotoPastCondition.IsEnabled = false;
-            gotoSecondCondition.IsEnabled = false;  
+            gotoSecondCondition.IsEnabled = false;
+            SaveButton.Content = "Save";
         }
 
         public void MinusZoomMyCanvas(object sender, RoutedEventArgs e)
@@ -274,19 +283,48 @@ namespace Baranov_sArtist
                 sfd.Title = "Сохранить как";
                 sfd.OverwritePrompt = true;
                 sfd.CheckPathExists = true;
-                sfd.Filter = "Files(*.bin)|*.bin";
+                sfd.Filter = "BIN Files (*.bin)|*.bin|Image (.PNG)|*.PNG"; //Files(*.bin)|*.bin
+                var filter = "BIN Files (*.bin)|*.bin";
                 sfd.ShowDialog();
                 if (sfd.FileName != "")
                 {
-                    FileStream file = (FileStream)sfd.OpenFile();
-                    BinaryFormatter bin = new BinaryFormatter();
-                    bin.Serialize(file, NotArtist.Figures);
-                    file.Close();
+                    Regex regex = new Regex(@"\w*.bin$");
+                    MatchCollection matches = regex.Matches(sfd.FileName);
+                    if (matches.Count > 0)
+                    {
+                        FileStream file = (FileStream)sfd.OpenFile();
+                        BinaryFormatter bin = new BinaryFormatter();
+                        bin.Serialize(file, NotArtist.Figures);
+                        file.Close();
+                    }
+                    else
+                    {
+                        ToImageSource(MyCanvas, sfd.FileName);
+                    }
+
                 }
+                isSave = true;
+                saveConditionNumber = NotArtist.ConditionNumber;
+                SaveButton.Content = "Save";
             }
             else
             {
-                System.Windows.MessageBox.Show("Нарисуйте что-нибудь...");
+                MessageBox.Show("Нарисуйте что-нибудь...");
+            }
+        }
+
+        public static void ToImageSource(Canvas canvas, string filename)
+        {
+            RenderTargetBitmap bmp = new RenderTargetBitmap(
+            (int)canvas.Width, (int)canvas.Height, 96d, 96d, PixelFormats.Pbgra32);
+            canvas.Measure(new Size((int)canvas.Width, (int)canvas.Height));
+            canvas.Arrange(new Rect(new Size((int)canvas.Width, (int)canvas.Height)));
+            bmp.Render(canvas);
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bmp));
+            using (FileStream file = File.Create(filename))
+            {
+                encoder.Save(file);
             }
         }
 
@@ -311,7 +349,9 @@ namespace Baranov_sArtist
             NotArtist.AddCondition();
             gotoPastCondition.IsEnabled = false;
             gotoSecondCondition.IsEnabled = false;
-
+            saveConditionNumber = NotArtist.ConditionNumber;
+            isSave = true;
+            SaveButton.Content = "Save";
         }
 
         private void gotoPastCondition_Click(object sender, RoutedEventArgs e)
@@ -323,6 +363,14 @@ namespace Baranov_sArtist
             }
             gotoSecondCondition.IsEnabled = true;
             Invalidate();
+            if (isSave && (saveConditionNumber == NotArtist.ConditionNumber) || (NotArtist.Figures.Count == 0))
+            {
+                SaveButton.Content = "Save";
+            }
+            else
+            {
+                SaveButton.Content = "Save*";
+            }
         }
 
         private void gotoSecondCondition_Click(object sender, RoutedEventArgs e)
@@ -334,6 +382,14 @@ namespace Baranov_sArtist
             }
             gotoPastCondition.IsEnabled = true;
             Invalidate();
+            if (isSave && (saveConditionNumber == NotArtist.ConditionNumber))
+            {
+                SaveButton.Content = "Save";
+            }
+            else
+            {
+                SaveButton.Content = "Save*";
+            }
         }
 
         public void changeRoundX(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -345,6 +401,10 @@ namespace Baranov_sArtist
                     figure.ChangeRoundX(e.NewValue);
                 }
             }
+            NotArtist.AddCondition();
+            gotoPastCondition.IsEnabled = true;
+            gotoSecondCondition.IsEnabled = false;
+            SaveButton.Content = "Save*";
             Invalidate();
         }
 
@@ -357,6 +417,10 @@ namespace Baranov_sArtist
                     figure.ChangeRoundY(e.NewValue);
                 }
             }
+            NotArtist.AddCondition();
+            gotoPastCondition.IsEnabled = true;
+            gotoSecondCondition.IsEnabled = false;
+            SaveButton.Content = "Save*";
             Invalidate();
         }
 
@@ -372,6 +436,7 @@ namespace Baranov_sArtist
             NotArtist.AddCondition();
             gotoPastCondition.IsEnabled = true;
             gotoSecondCondition.IsEnabled = false;
+            SaveButton.Content = "Save*";
             Invalidate();
         }
 
@@ -387,6 +452,7 @@ namespace Baranov_sArtist
             NotArtist.AddCondition();
             gotoPastCondition.IsEnabled = true;
             gotoSecondCondition.IsEnabled = false;
+            SaveButton.Content = "Save*";
             Invalidate();
         }
 
@@ -402,6 +468,7 @@ namespace Baranov_sArtist
             NotArtist.AddCondition();
             gotoPastCondition.IsEnabled = true;
             gotoSecondCondition.IsEnabled = false;
+            SaveButton.Content = "Save*";
             Invalidate();
         }
 
@@ -418,6 +485,7 @@ namespace Baranov_sArtist
             NotArtist.AddCondition();
             gotoPastCondition.IsEnabled = true;
             gotoSecondCondition.IsEnabled = false;
+            SaveButton.Content = "Save*";
             Invalidate();
         }
 
@@ -430,6 +498,9 @@ namespace Baranov_sArtist
                     figure.ChangePen(e.NewValue);
                 }
             }
+            gotoPastCondition.IsEnabled = true;
+            gotoSecondCondition.IsEnabled = false;
+            SaveButton.Content = "Save*";
             Invalidate();
         }
 
@@ -443,6 +514,7 @@ namespace Baranov_sArtist
             NotArtist.AddCondition();
             gotoPastCondition.IsEnabled = true;
             gotoSecondCondition.IsEnabled = false;
+            SaveButton.Content = "Save*";
         }
 
 
@@ -465,6 +537,7 @@ namespace Baranov_sArtist
             NotArtist.AddCondition();
             gotoPastCondition.IsEnabled = true;
             gotoSecondCondition.IsEnabled = false;
+            SaveButton.Content = "Save*";
             Invalidate();
         }
 
@@ -485,7 +558,37 @@ namespace Baranov_sArtist
             NotArtist.AddCondition();
             gotoPastCondition.IsEnabled = true;
             gotoSecondCondition.IsEnabled = false;
+            SaveButton.Content = "Save*";
             Invalidate();
+        }
+
+        public static ImageSource ToImageSource(FrameworkElement obj)
+        {
+            // Save current canvas transform
+            Transform transform = obj.LayoutTransform;
+            obj.LayoutTransform = null;
+            
+            // fix margin offset as well
+            Thickness margin = obj.Margin;
+            obj.Margin = new Thickness(0, 0,
+                 margin.Right - margin.Left, margin.Bottom - margin.Top);
+ 
+            // Get the size of canvas
+            Size size = new Size(obj.Width, obj.Height);
+            
+            // force control to Update
+            obj.Measure(size);
+            obj.Arrange(new Rect(size));
+ 
+            RenderTargetBitmap bmp = new RenderTargetBitmap(
+                (int)obj.Width, (int)obj.Height, 96, 96, PixelFormats.Pbgra32);
+            
+            bmp.Render(obj);
+ 
+            // return values as they were before
+            obj.LayoutTransform = transform;
+            obj.Margin = margin;
+            return bmp;
         }
 
         
@@ -532,9 +635,22 @@ namespace Baranov_sArtist
                     }
                     NotArtist.Figures.Add(cloneObj);
                 }
-            }
 
-            Invalidate();
+                for (int i = 0, k = NotArtist.Figures.Count; i < k; i++)
+                {
+
+                    if (NotArtist.Figures[i].Select)
+                    {
+                        NotArtist.Figures[i].UnSelected();
+                    }
+                }
+                PropToolBarPanel.Children.Clear();
+                NotArtist.AddCondition();
+                gotoPastCondition.IsEnabled = true;
+                gotoSecondCondition.IsEnabled = false;
+                SaveButton.Content = "Save*";
+                Invalidate();
+            }           
         }
     }
 }
