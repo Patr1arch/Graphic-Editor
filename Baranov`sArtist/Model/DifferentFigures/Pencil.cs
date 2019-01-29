@@ -154,5 +154,17 @@ namespace Baranov_sArtist.Model.DifferentFigures
                 Type = this.Type
             };
         }
+
+        public override string ConvertToSVG()
+        {
+
+            var svgCoordinates = string.Empty;
+
+            for (var i = 0; i < coordinates.Count; i++)
+            {
+                svgCoordinates += Math.Round(coordinates[i].X).ToString() + "," + Math.Round(coordinates[i].Y).ToString() + " ";
+            }
+            return "<polyline points=\"" + svgCoordinates + "\" style=\"fill:none;stroke:" + ((SolidColorBrush)Pen.Brush).Color.ToString().Remove(1, 2) + ";stroke-width:" + Math.Round(Pen.Thickness).ToString() + "\"/>";
+        }
     }
 }

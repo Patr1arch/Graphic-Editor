@@ -149,5 +149,10 @@ namespace Baranov_sArtist.Model.DifferentFigures
                 Type = this.Type
             };
         }
+
+        public override string ConvertToSVG()
+        {
+            return "<rect x=" + Math.Round(coordinates[0].X).ToString() + " y=" + Math.Round(coordinates[0].Y).ToString() + " fill - opacity = " + (((SolidColorBrush)BrushColor).Color.A / 255.0).ToString() + " rx=" + RoundX.ToString() + " ry =" + RoundY.ToString() + " width=" + Math.Round(Point.Subtract(coordinates[1], coordinates[0]).X).ToString() + " height=" + Math.Round(Point.Subtract(coordinates[1], coordinates[0]).Y).ToString() + " style=\"fill:" + ((SolidColorBrush)BrushColor).Color.ToString().Remove(1, 2) + " ;stroke:" + ((SolidColorBrush)Pen.Brush).Color.ToString().Remove(1, 2) + ";stroke-width:" + Math.Round(Pen.Thickness).ToString() + "\"/>";   
+        }
     }
 }

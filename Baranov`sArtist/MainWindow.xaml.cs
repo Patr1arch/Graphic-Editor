@@ -283,8 +283,7 @@ namespace Baranov_sArtist
                 sfd.Title = "Сохранить как";
                 sfd.OverwritePrompt = true;
                 sfd.CheckPathExists = true;
-                sfd.Filter = "BIN Files (*.bin)|*.bin|Image (.PNG)|*.PNG"; //Files(*.bin)|*.bin
-                var filter = "BIN Files (*.bin)|*.bin";
+                sfd.Filter = "BIN Files (*.bin)|*.bin|Image (.PNG)|*.PNG|SVG Files|*.html"; //Files(*.bin)|*.bin
                 sfd.ShowDialog();
                 if (sfd.FileName != "")
                 {
@@ -297,9 +296,18 @@ namespace Baranov_sArtist
                         bin.Serialize(file, NotArtist.Figures);
                         file.Close();
                     }
-                    else
+                    else 
                     {
-                        ToImageSource(MyCanvas, sfd.FileName);
+                        regex = new Regex(@"\w*.html$");
+                        matches = regex.Matches(sfd.FileName);
+                        if (matches.Count > 0)
+                        {
+                            ToSVGSource(MyCanvas, sfd.FileName);
+                        }
+                        else
+                        {
+                            ToImageSource(MyCanvas, sfd.FileName);
+                        }
                     }
 
                 }
@@ -313,6 +321,17 @@ namespace Baranov_sArtist
             }
         }
 
+        public static void ToSVGSource(Canvas canvas, string filename)
+        {
+            var svg = "<svg width=" + canvas.Width.ToString() + " height=" + canvas.Height.ToString() + ">\n" + Environment.NewLine;
+            foreach (Figure figure in NotArtist.Figures)
+            {
+                svg += " " + figure.ConvertToSVG() + Environment.NewLine;
+            }
+            svg += "</svg>";
+            File.WriteAllText(filename, svg);
+        }
+
         public static void ToImageSource(Canvas canvas, string filename)
         {
             RenderTargetBitmap bmp = new RenderTargetBitmap(
@@ -320,7 +339,7 @@ namespace Baranov_sArtist
             canvas.Measure(new Size((int)canvas.Width, (int)canvas.Height));
             canvas.Arrange(new Rect(new Size((int)canvas.Width, (int)canvas.Height)));
             bmp.Render(canvas);
-            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            BitmapEncoder encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
             using (FileStream file = File.Create(filename))
             {

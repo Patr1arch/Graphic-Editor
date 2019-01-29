@@ -113,5 +113,10 @@ namespace Baranov_sArtist.Model.DifferentFigures
         {
 
         }
+
+        public virtual string ConvertToSVG()
+        {
+            return "";
+        }
     }
 }

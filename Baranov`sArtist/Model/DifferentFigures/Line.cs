@@ -128,5 +128,10 @@ namespace Baranov_sArtist.Model.DifferentFigures
                 Type = this.Type
             };
         }
+
+        public override string ConvertToSVG()
+        {
+            return "<line x1=" + Math.Round(coordinates[0].X).ToString() + " y1=" + Math.Round(coordinates[0].Y).ToString() + " x2=" + Math.Round(coordinates[1].X).ToString() + " y2=" + Math.Round(coordinates[1].Y).ToString() + " style=\"stroke:" + ((SolidColorBrush)Pen.Brush).Color.ToString().Remove(1, 2) + " ;stroke-width:" + Math.Round(Pen.Thickness).ToString() + "\"/>";
+        }   
     }
 }
