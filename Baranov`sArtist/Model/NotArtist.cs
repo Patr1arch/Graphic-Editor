@@ -193,7 +193,6 @@ namespace Baranov_sArtist.Model
             { "Purple", Brushes.Purple },
             { "Coral", Brushes.Coral },
             { "White", Brushes.White },
-            { "null", null }
         };
     }
 }

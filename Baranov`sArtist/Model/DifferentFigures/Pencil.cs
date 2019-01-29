@@ -38,7 +38,7 @@ namespace Baranov_sArtist.Model.DifferentFigures
                 ctx.PolyLineTo(coordinates, true /* is stroked */, false /* is smooth join */);
             }
             geometry.Freeze();
-            drawingContext.DrawGeometry(NotArtist.BrushNow, Pen, geometry);
+            drawingContext.DrawGeometry(Brushes.Transparent, Pen, geometry);
         }
 
         public override void ChangeCoord(Point aPoint)
@@ -48,7 +48,7 @@ namespace Baranov_sArtist.Model.DifferentFigures
 
         public override void Selected()
         {
-            if (Select == false)
+            if (!Select)
             {
                 Point pForRect3 = coordinates[0];
                 Point pForRect4 = new Point(0, 0);
@@ -86,7 +86,7 @@ namespace Baranov_sArtist.Model.DifferentFigures
 
         public override void UnSelected()
         {
-            if (Select == true)
+            if (!Select)
             {
                 Select = false;
                 SelectRect = null;

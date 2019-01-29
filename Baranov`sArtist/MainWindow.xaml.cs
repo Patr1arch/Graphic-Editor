@@ -9,6 +9,7 @@ using Figure = Baranov_sArtist.Model.DifferentFigures.Figure;
 using Microsoft.Win32;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Reflection;
 
 namespace Baranov_sArtist
 {
@@ -18,6 +19,8 @@ namespace Baranov_sArtist
     public partial class MainWindow : Window
     {
         public static MainWindow Instance { get; private set; }
+
+        List<Figure> BufList = new List<Figure>();
 
         bool ClickOnCanvas = false;
 
@@ -138,8 +141,8 @@ namespace Baranov_sArtist
 
         public void ButtonChangeTool(object sender, RoutedEventArgs e)
         {
-            NotArtist.SelectedTool = NotArtist.ToolsList[(sender as System.Windows.Controls.Button).Name.ToString()];
-            if ((sender as System.Windows.Controls.Button).Name.ToString() == "RoundRectangle")
+            NotArtist.SelectedTool = NotArtist.ToolsList[(sender as Button).Name.ToString()];
+            if ((sender as Button).Name.ToString() == "RoundRectangle")
             {
                 textBoxRoundRectX.IsEnabled = true;
                 textBoxRoundRectY.IsEnabled = true;
@@ -161,18 +164,18 @@ namespace Baranov_sArtist
         {
             if (NotArtist.FirstPress == true)
             {
-                NotArtist.SelectedColor = NotArtist.TransformColor[(sender as System.Windows.Controls.Button).Name.ToString()];
-                NotArtist.ColorStringNow = (sender as System.Windows.Controls.Button).Name.ToString();
-                if ((sender as System.Windows.Controls.Button).Background == null) { button_firstColor.Background = Brushes.Gray; }
-                else { button_firstColor.Background = (sender as System.Windows.Controls.Button).Background; }
+                NotArtist.SelectedColor = NotArtist.TransformColor[(sender as Button).Name.ToString()];
+                NotArtist.ColorStringNow = (sender as Button).Name.ToString();
+                if ((sender as Button).Background == null) { button_firstColor.Background = Brushes.Gray; }
+                else { button_firstColor.Background = (sender as Button).Background; }
 
             }
             else
             {
-                NotArtist.BrushNow = NotArtist.TransformColor[(sender as System.Windows.Controls.Button).Name.ToString()];
-                NotArtist.BrushStringNow = (sender as System.Windows.Controls.Button).Name.ToString();
-                if ((sender as System.Windows.Controls.Button).Background == null) { button_secondColor.Background = Brushes.Gray; }
-                else { button_secondColor.Background = (sender as System.Windows.Controls.Button).Background; }
+                NotArtist.BrushNow = NotArtist.TransformColor[(sender as Button).Name.ToString()];
+                NotArtist.BrushStringNow = (sender as Button).Name.ToString();
+                if ((sender as Button).Background == null) { button_secondColor.Background = Brushes.Gray; }
+                else { button_secondColor.Background = (sender as Button).Background; }
             }
         }
 
@@ -333,8 +336,6 @@ namespace Baranov_sArtist
             Invalidate();
         }
 
-        //Change property figure function
-
         public void changeRoundX(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             foreach (Figure figure in NotArtist.Figures)
@@ -484,6 +485,55 @@ namespace Baranov_sArtist
             NotArtist.AddCondition();
             gotoPastCondition.IsEnabled = true;
             gotoSecondCondition.IsEnabled = false;
+            Invalidate();
+        }
+
+        
+        private void MyCanvas_KeyDown(object sender, KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if (e.Key == Key.C)
+            {
+                BufList.Clear();
+                for (int i = 0, k = NotArtist.Figures.Count; i < k; i++)
+                {
+
+                    if (NotArtist.Figures[i].Select)
+                    {
+                        
+                        BufList.Add(NotArtist.Figures[i]);
+                    }
+                }
+            }
+
+            if (e.Key == Key.V)
+            {
+                int pointsCount = 0;
+                var v = new Vector();
+                foreach (var figure in BufList)
+                {
+                    foreach (var point in figure.coordinates)
+                    {
+                        pointsCount++;
+                        v.X += point.X;
+                        v.Y += point.Y;
+                    }
+                }
+                v.X = v.X / pointsCount;
+                v.Y = v.Y / pointsCount;
+                v -= (Vector)Mouse.GetPosition(MyCanvas);
+
+                for (var i = 0; i < BufList.Count; i++)
+                {
+                    var cloneObj = BufList[i].Clone();
+                    for (var j = 0; j < cloneObj.coordinates.Count; j++)
+                    {
+                        cloneObj.coordinates[j] -= v;
+                    }
+                    NotArtist.Figures.Add(cloneObj);
+                }
+            }
+
             Invalidate();
         }
     }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Baranov_sArtist"
         mc:Ignorable="d"
-        Title="MainWindow" Height="722.7" Width="986.824" ResizeMode="NoResize">
+        Title="MainWindow" Height="722.7" Width="986.824" KeyDown="MyCanvas_KeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70px"></RowDefinition>
@@ -59,9 +59,9 @@
                 <ColumnDefinition Width="135"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ScrollViewer Name="ScrollViewerCanvas" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanContentScroll="False" Margin="4,0,0,0">
+            <ScrollViewer Name="ScrollViewerCanvas" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanContentScroll="False" Margin="3.8,0,9.8,10.4">
                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <Canvas  x:Name="MyCanvas" Background="Gray" MouseDown="MyCanvas_MouseDown" MouseUp="MyCanvas_MouseUp" MouseMove="MyCanvas_MouseMove" ClipToBounds="True" Height="493" VerticalAlignment="Top" HorizontalAlignment="Left" Width="759" Loaded="MyCanvasLoaded" SizeChanged="MyCanvas_SizeChanged" MouseLeave="MyCanvas_MouseLeave">
+                    <Canvas  x:Name="MyCanvas" Background="Gray" MouseDown="MyCanvas_MouseDown" MouseUp="MyCanvas_MouseUp" MouseMove="MyCanvas_MouseMove" ClipToBounds="True" Height="588" VerticalAlignment="Top" HorizontalAlignment="Left" Width="810" Loaded="MyCanvasLoaded" SizeChanged="MyCanvas_SizeChanged" MouseLeave="MyCanvas_MouseLeave" >
                         <Canvas.LayoutTransform>
                             <ScaleTransform x:Name="layout"/>
                         </Canvas.LayoutTransform>

@@ -33,15 +33,18 @@ namespace Baranov_sArtist.Model.DifferentFigures
 
         public override void Draw(DrawingContext drawingContext)
         {
+            RoundX = (coordinates[1].X - coordinates[0].X) / 2;
+            RoundY = (coordinates[1].Y - coordinates[0].Y) / 2;
             var diagonal = Point.Subtract(coordinates[0], coordinates[1]);
-            drawingContext.DrawRoundedRectangle(BrushColor, Pen, new Rect(coordinates[1], diagonal), (coordinates[1].X - coordinates[0].X) / 2, (coordinates[1].Y - coordinates[0].Y) / 2);
+            drawingContext.DrawRoundedRectangle(BrushColor, Pen, new Rect(coordinates[1], diagonal), RoundX, RoundY);
+
         }
 
         public override void ChangeCoord(Point aPoint) => coordinates[1] = aPoint;
 
         public override void Selected()
         {
-            if (Select == false)
+            if (!Select)
             {
                 Point pForRect3 = new Point();
                 pForRect3.X = Math.Min(coordinates[0].X, coordinates[1].X);
@@ -61,7 +64,7 @@ namespace Baranov_sArtist.Model.DifferentFigures
 
         public override void UnSelected()
         {
-            if (Select == true)
+            if (Select)
             {
                 Select = false;
                 SelectRect = null;

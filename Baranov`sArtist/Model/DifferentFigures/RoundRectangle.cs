@@ -44,7 +44,7 @@ namespace Baranov_sArtist.Model.DifferentFigures
 
         public override void Selected()
         {
-            if (Select == false)
+            if (!Select)
             {
                 Point pForRect3 = new Point();
                 pForRect3.X = Math.Min(coordinates[0].X, coordinates[1].X);
@@ -64,7 +64,7 @@ namespace Baranov_sArtist.Model.DifferentFigures
 
         public override void UnSelected()
         {
-            if (Select == true)
+            if (Select)
             {
                 Select = false;
                 SelectRect = null;
@@ -97,15 +97,9 @@ namespace Baranov_sArtist.Model.DifferentFigures
             PenThikness = thikness;
         }
 
-        public override void ChangeRoundX(double newRoundX)
-        {
-            RoundX = newRoundX;
-        }
+        public override void ChangeRoundX(double newRoundX) => RoundX = newRoundX;
 
-        public override void ChangeRoundY(double newRoundY)
-        {
-            RoundY = newRoundY;
-        }
+        public override void ChangeRoundY(double newRoundY) => RoundY = newRoundY;
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {

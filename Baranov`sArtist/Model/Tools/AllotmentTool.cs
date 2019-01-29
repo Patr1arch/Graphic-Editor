@@ -82,7 +82,7 @@ namespace BaranovsArtist.Model.Tools
                         ((p1Min.X < figure.coordinates[1].X) &
                         (figure.coordinates[1].X < p2Max.X) &
                         (p1Min.Y < figure.coordinates[1].Y) &
-                        (figure.coordinates[1].Y < p2Max.Y)))
+                        (figure.coordinates[1].Y < p2Max.Y))) 
                     {
                         figure.Selected();
                     }
