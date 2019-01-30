@@ -146,11 +146,11 @@ namespace Baranov_sArtist.Model.DifferentFigures
         {
 
             var size = Point.Subtract(coordinates[1], coordinates[0]);
-            var point0 = Point.Subtract(coordinates[1], size / 2);
+            var center = Point.Subtract(coordinates[1], size / 2);
             var opacity = ((SolidColorBrush)BrushColor).Color.A / 255.0;
             var fill = ((SolidColorBrush)BrushColor).Color.ToString().Remove(1, 2);
             var stroke = ((SolidColorBrush)Pen.Brush).Color.ToString().Remove(1, 2);
-            return "<ellipse cx=" + Math.Floor(point0.X).ToString() + " cy=" + Math.Floor(point0.Y).ToString() + " fill-opacity=" + opacity.ToString() + " rx=" + Math.Round(size.X / 2).ToString() + " ry=" + Math.Round(size.Y / 2).ToString() + " style=\"fill:" + fill + " ;stroke:" + stroke + " ;stroke-width:" + Math.Round(Pen.Thickness).ToString() + "\"/>";
+            return "<ellipse cx=" + Math.Floor(center.X).ToString() + " cy=" + Math.Floor(center.Y).ToString() + " fill-opacity=" + opacity.ToString() + " rx=" + Math.Round(size.X / 2).ToString() + " ry=" + Math.Round(size.Y / 2).ToString() + " style=\"fill:" + fill + " ;stroke:" + stroke + " ;stroke-width:" + Math.Round(Pen.Thickness).ToString() + "\"/>";
         }
     }
 }

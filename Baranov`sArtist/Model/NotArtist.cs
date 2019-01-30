@@ -101,7 +101,7 @@ namespace Baranov_sArtist.Model
             }
         }
 
-        public static Brush BrushNow = null;
+        public static Brush BrushNow = Brushes.Transparent;
 
         public static string BrushStringNow = "null";
 

@@ -174,16 +174,16 @@ namespace Baranov_sArtist
             {
                 NotArtist.SelectedColor = NotArtist.TransformColor[(sender as Button).Name.ToString()];
                 NotArtist.ColorStringNow = (sender as Button).Name.ToString();
-                if ((sender as Button).Background == null) { button_firstColor.Background = Brushes.Gray; }
-                else { button_firstColor.Background = (sender as Button).Background; }
+                //if ((sender as Button).Background == null) { button_firstColor.Background = Brushes.Gray; }
+                //else { button_firstColor.Background = (sender as Button).Background; }
 
             }
             else
             {
                 NotArtist.BrushNow = NotArtist.TransformColor[(sender as Button).Name.ToString()];
                 NotArtist.BrushStringNow = (sender as Button).Name.ToString();
-                if ((sender as Button).Background == null) { button_secondColor.Background = Brushes.Gray; }
-                else { button_secondColor.Background = (sender as Button).Background; }
+                //if ((sender as Button).Background == null) { button_secondColor.Background = Brushes.Gray; }
+                //else { button_secondColor.Background = (sender as Button).Background; }
             }
         }
 
@@ -339,7 +339,7 @@ namespace Baranov_sArtist
             canvas.Measure(new Size((int)canvas.Width, (int)canvas.Height));
             canvas.Arrange(new Rect(new Size((int)canvas.Width, (int)canvas.Height)));
             bmp.Render(canvas);
-            BitmapEncoder encoder = new PngBitmapEncoder();
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
             using (FileStream file = File.Create(filename))
             {
