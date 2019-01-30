@@ -86,7 +86,7 @@ namespace Baranov_sArtist.Model.DifferentFigures
 
         public override void UnSelected()
         {
-            if (!Select)
+            if (Select)
             {
                 Select = false;
                 SelectRect = null;

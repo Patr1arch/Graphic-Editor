@@ -319,6 +319,7 @@ namespace Baranov_sArtist
             {
                 MessageBox.Show("Нарисуйте что-нибудь...");
             }
+            PropToolBarPanel.Children.Clear();
         }
 
         public static void ToSVGSource(Canvas canvas, string filename)
@@ -371,6 +372,7 @@ namespace Baranov_sArtist
             saveConditionNumber = NotArtist.ConditionNumber;
             isSave = true;
             SaveButton.Content = "Save";
+            PropToolBarPanel.Children.Clear();
         }
 
         private void gotoPastCondition_Click(object sender, RoutedEventArgs e)
@@ -431,7 +433,7 @@ namespace Baranov_sArtist
         {
             foreach (Figure figure in NotArtist.Figures)
             {
-                if (figure.Select == true)
+                if (figure.Select)
                 {
                     figure.ChangeRoundY(e.NewValue);
                 }
@@ -447,9 +449,9 @@ namespace Baranov_sArtist
         {
             foreach (Figure figure in NotArtist.Figures)
             {
-                if (figure.Select == true)
+                if (figure.Select)
                 {
-                    figure.ChangePen(NotArtist.TransformColor[(sender as System.Windows.Controls.Button).Tag.ToString()], (sender as System.Windows.Controls.Button).Tag.ToString());
+                    figure.ChangePen(NotArtist.TransformColor[(sender as Button).Tag.ToString()], (sender as System.Windows.Controls.Button).Tag.ToString());
                 }
             }
             NotArtist.AddCondition();
@@ -463,7 +465,7 @@ namespace Baranov_sArtist
         {
             foreach (Figure figure in NotArtist.Figures)
             {
-                if (figure.Select == true)
+                if (figure.Select)
                 {
                     figure.ChangePen(NotArtist.TransformColor[(sender as System.Windows.Controls.Button).Tag.ToString()], (sender as System.Windows.Controls.Button).Tag.ToString(), new bool());
                 }
@@ -479,9 +481,9 @@ namespace Baranov_sArtist
         {
             foreach (Figure figure in NotArtist.Figures)
             {
-                if (figure.Select == true)
+                if (figure.Select)
                 {
-                    figure.ChangePen(NotArtist.TransformDashProp[(sender as System.Windows.Controls.Button).Content.ToString()], (sender as System.Windows.Controls.Button).Content.ToString());
+                    figure.ChangePen(NotArtist.TransformDashProp[(sender as Button).Content.ToString()], (sender as System.Windows.Controls.Button).Content.ToString());
                 }
             }
             NotArtist.AddCondition();
@@ -495,7 +497,7 @@ namespace Baranov_sArtist
         {
             foreach (Figure figure in NotArtist.Figures.ToArray())
             {
-                if (figure.Select == true)
+                if (figure.Select)
                 {
                     NotArtist.Figures.Remove(figure);
                 }
@@ -512,7 +514,7 @@ namespace Baranov_sArtist
         {
             foreach (Figure figure in NotArtist.Figures)
             {
-                if (figure.Select == true)
+                if (figure.Select)
                 {
                     figure.ChangePen(e.NewValue);
                 }

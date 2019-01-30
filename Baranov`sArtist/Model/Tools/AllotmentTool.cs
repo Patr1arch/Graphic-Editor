@@ -237,7 +237,7 @@ namespace BaranovsArtist.Model.Tools
 
             foreach (Figure figure in NotArtist.Figures)
             {
-                if (figure.Select == true)
+                if (figure.Select)
                 {
                     if (i == figure.PenThikness) { CheckThikness = true; }
                     else { CheckThikness = false; break; }
